@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Mavericks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+
+        .special-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .special-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+        }
+
+        .reports-btn {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1e3a8a;
+        }
+
+        .reports-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .team-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            color: white;
+        }
+
+        .team-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 150px 0 80px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-section p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .contact-info h2 {
+            color: #1e3a8a;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .contact-info p {
+            color: #6b7280;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 30px;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #fbbf24;
+        }
+
+        .member-photo {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #e5e7eb, #d1d5db);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .member-info {
+            padding: 1.5rem;
+        }
+
+        .member-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: #fbbf24;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .member-bio {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .member-contact {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-btn {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: #1e3a8a;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1e3a8a;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5em;
+            }
+
+            .hero-section p {
+                font-size: 1.1em;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .special-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .special-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="nav-content">
+                <div class="logo">Mavericks</div>
+                
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="equipe.html">Equipe</a></li>
+                    <li><a href="depoimentos.html">Depoimentos</a></li>
+                    <li><a href="destaques.html">Destaques</a></li>
+                    <li><a href="contato.html" class="active">Contato</a></li>
+                </ul>
+
+                <div class="special-buttons">
+                    <a href="relatorios.html" class="special-btn reports-btn">
+                        <span>📊</span>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="equipe.html" class="special-btn team-btn">
+                        <span>👥</span>
+                        <span>Equipe Completa</span>
+                    </a>
+                </div>
+
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <h1>CONTATO</h1>
+                <p>Entre em contato conosco e encontre o imóvel ideal</p>
+            </div>
+        </section>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2>Fale Conosco</h2>
+                        <p>Nossa equipe está pronta para atender você e encontrar a melhor solução para suas necessidades imobiliárias.</p>
+                        
+                        <h2>Nossa Equipe de Corretores</h2>
+                        <div class="agents-grid">
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor1.jpg" alt="Laís Barbaresco ">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Laís Barbaresco </h3>
+                                    <p class="member-role">Corretora</p>
+                                    <p class="member-bio">Especialista em Loteamentos comerciais com vasta experiência.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999991?text=Olá%20Laís,%20gostaria%20de%20mais%20informações%20sobre%20imóveis%20comerciais!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor2.jpg" alt="Sileide Corrêa">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Sileide Corrêa</h3>
+                                    <p class="member-role">Corretora</p>
+                                    <p class="member-bio">Especialista em Loteamentos comerciais com vasta experiência.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999992?text=Olá%20Sileide,%20gostaria%20de%20falar%20sobre%20opções%20de%20imóveis!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor0.jpg" alt="Carlos Augusto">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Carlos Augusto</h3>
+                                    <p class="member-role">Coordenador de Vendas</p>
+                                    <p class="member-bio">Líder com visão estratégica em vendas.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999993?text=Olá%20Carlos,%20preciso%20de%20mais%20imagens%20do%20resort!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor4.jpg" alt="Eduardo Curcino">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Eduardo Curcino</h3>
+                                    <p class="member-role">Corretor </p>
+                                    <p class="member-bio">Especialista em Loteamentos comerciais com vasta experiência.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999994?text=Olá%20Eduardo,%20interesse%20em%20loteamentos%20de%20melhor%20localidade!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor5.jpg" alt="Jhennyfer Sabino">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Jhennyfer Sabino</h3>
+                                    <p class="member-role">Especialista Residencial</p>
+                                    <p class="member-bio">Focada em experiências inesqueciveis no resort.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999995?text=Olá%20Jhennyfer,%20gostaria%20de%20saber%20sobre%20Lotes!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor6.jpg" alt="Fabio Fabrin">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Fabio Fabrin</h3>
+                                    <p class="member-role">Corretor</p>
+                                    <p class="member-bio">Especialista em vendas.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999996?text=Olá%20Fabio,%20gostaria%20de%20saber%20sobre%20Lotes!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor7.jpg" alt="Higor Costa da Silva 
+">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Higor Costa da Silva 
+</h3>
+                                    <p class="member-role">Especialista Terrenos</p>
+                                    <p class="member-bio">Expert em negociação de terrenos.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999997?text=Olá%20Higor,%20gostaria%20de%20saber%20sobre%20Lotes!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor8.jpg" alt="Fernanda Lima">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Fernanda Lima</h3>
+                                    <p class="member-role">Corretora Júnior</p>
+                                    <p class="member-bio">Iniciando com dedicação no mercado.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999998?text=Olá%20Fernanda,%20gostaria%20de%20informações!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor9.jpg" alt="Paulo Mendes">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Paulo Mendes</h3>
+                                    <p class="member-role">Especialista Investimentos</p>
+                                    <p class="member-bio">Focado em investimentos imobiliários.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999999?text=Olá%20Paulo,%20interesse%20em%20investimentos%20imobiliários!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-photo">
+                                    <img src="corretor10.jpg" alt="Juliana Costa">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Juliana Costa</h3>
+                                    <p class="member-role">Consultora de Luxo</p>
+                                    <p class="member-bio">Especialista em imóveis de luxo.</p>
+                                    <div class="member-contact">
+                                        <a href="https://wa.me/5511999999910?text=Olá%20Juliana,%20gostaria%20de%20saber%20sobre%20imóveis%20de%20luxo!" class="contact-btn">
+                                            <span>📱</span> WhatsApp
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Fechar menu ao clicar em um link (mobile)
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+            });
+        });
+
+        // Efeito de fade-in
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar fade-in aos elementos
+        document.querySelectorAll('.contact-info, .team-member').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios de Corretores - Mavericks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .special-btn {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1e3a8a;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .special-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+        }
+
+        .special-btn.active {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #fbbf24;
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #fbbf24;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Reports Section */
+        .reports-section {
+            padding: 4rem 0;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .report-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .report-info h3 {
+            font-size: 1.2rem;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-info p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .report-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        /* Performance Section */
+        .performance-section {
+            background: white;
+            padding: 4rem 0;
+            margin-top: 3rem;
+        }
+
+        .performance-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 3rem;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .performance-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .performance-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .performance-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .performance-label {
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e3a8a;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-buttons {
+                order: -1;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .report-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Mavericks</div>
+                <div class="nav-buttons">
+                    <a href="/relatorios.html" class="special-btn active">📊 Relatórios de Corretores</a>
+                    <a href="/equipe.html" class="special-btn">👥 Equipe Completa</a>
+                </div>
+                <div class="mobile-menu">☰</div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="equipe.html">Equipe</a></li>
+                    <li><a href="depoimentos.html">Depoimentos</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="relatorios.html" class="active">Relatórios</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="fade-in">Relatórios de Performance</h1>
+            <p class="fade-in">Acompanhe o desempenho detalhado de nossa equipe de corretores e os resultados alcançados</p>
+        </div>
+    </section>
+
+    <section class="reports-section">
+        <div class="container">
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Carregando relatórios...</p>
+            </div>
+            
+            <div class="reports-grid" id="reports-grid">
+                <div class="report-card fade-in" data-corretor="carlos" data-periodo="mensal" data-tipo="residencial">
+                    <div class="report-header">
+                        <div class="report-icon">👨‍💼</div>
+                        <div class="report-info">
+                            <h3>Carlos Henrique Silva</h3>
+                            <p>Relatório Mensal - Dezembro 2024</p>
+                        </div>
+                    </div>
+                    <div class="report-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Vendas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">R$ 2.8M</div>
+                            <div class="stat-label">Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">45</div>
+                            <div class="stat-label">Visitas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">Satisfação</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card fade-in" data-corretor="ana" data-periodo="mensal" data-tipo="comercial">
+                    <div class="report-header">
+                        <div class="report-icon">👩‍💼</div>
+                        <div class="report-info">
+                            <h3>Ana Paula Santos</h3>
+                            <p>Relatório Mensal - Dezembro 2024</p>
+                        </div>
+                    </div>
+                    <div class="report-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">12</div>
+                            <div class="stat-label">Vendas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">R$ 3.2M</div>
+                            <div class="stat-label">Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">38</div>
+                            <div class="stat-label">Visitas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">96%</div>
+                            <div class="stat-label">Satisfação</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card fade-in" data-corretor="roberto" data-periodo="mensal" data-tipo="terreno">
+                    <div class="report-header">
+                        <div class="report-icon">👨‍💼</div>
+                        <div class="report-info">
+                            <h3>Roberto Oliveira</h3>
+                            <p>Relatório Mensal - Dezembro 2024</p>
+                        </div>
+                    </div>
+                    <div class="report-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">8</div>
+                            <div class="stat-label">Vendas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">R$ 4.1M</div>
+                            <div class="stat-label">Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">25</div>
+                            <div class="stat-label">Visitas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">89%</div>
+                            <div class="stat-label">Satisfação</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-card fade-in" data-corretor="mariana" data-periodo="mensal" data-tipo="residencial">
+                    <div class="report-header">
+                        <div class="report-icon">👩‍💼</div>
+                        <div class="report-info">
+                            <h3>Mariana Costa</h3>
+                            <p>Relatório Mensal - Dezembro 2024</p>
+                        </div>
+                    </div>
+                    <div class="report-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">18</div>
+                            <div class="stat-label">Vendas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">R$ 2.1M</div>
+                            <div class="stat-label">Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">52</div>
+                            <div class="stat-label">Visitas</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">94%</div>
+                            <div class="stat-label">Satisfação</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="performance-section">
+        <div class="container">
+            <h2 class="performance-title">Performance Geral da Equipe</h2>
+            <div class="performance-grid">
+                <div class="performance-card fade-in">
+                    <div class="performance-icon">🏆</div>
+                    <div class="performance-value">53</div>
+                    <div class="performance-label">Vendas no Mês</div>
+                </div>
+                <div class="performance-card fade-in">
+                    <div class="performance-icon">💰</div>
+                    <div class="performance-value">R$ 12.2M</div>
+                    <div class="performance-label">Volume Total</div>
+                </div>
+                <div class="performance-card fade-in">
+                    <div class="performance-icon">📈</div>
+                    <div class="performance-value">+28%</div>
+                    <div class="performance-label">Crescimento</div>
+                </div>
+                <div class="performance-card fade-in">
+                    <div class="performance-icon">⭐</div>
+                    <div class="performance-value">93%</div>
+                    <div class="performance-label">Satisfação Média</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Equipe Mavericks. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function filtrarRelatorios() {
+            const periodoSelecionado = document.getElementById('periodo').value;
+            const corretorSelecionado = document.getElementById('corretor').value;
+            const tipoSelecionado = document.getElementById('tipo').value;
+
+            const cards = document.querySelectorAll('.report-card');
+            const loading = document.getElementById('loading');
+            const reportsGrid = document.getElementById('reports-grid');
+
+            // Mostra carregando
+            loading.style.display = 'block';
+            reportsGrid.style.display = 'none';
+
+            setTimeout(() => {
+                loading.style.display = 'none';
+                reportsGrid.style.display = 'grid';
+
+                cards.forEach(card => {
+                    const cardCorretor = card.getAttribute('data-corretor') || '';
+                    const cardPeriodo = card.getAttribute('data-periodo') || '';
+                    const cardTipo = card.getAttribute('data-tipo') || '';
+
+                    const matchCorretor = corretorSelecionado === 'todos' || cardCorretor === corretorSelecionado;
+                    const matchPeriodo = periodoSelecionado === 'todos' || cardPeriodo === periodoSelecionado;
+                    const matchTipo = tipoSelecionado === 'todos' || cardTipo === tipoSelecionado;
+
+                    card.style.display = (matchCorretor && matchPeriodo && matchTipo) ? 'block' : 'none';
+                });
+            }, 500);
+        }
+    </script>
+</body>
+</html>

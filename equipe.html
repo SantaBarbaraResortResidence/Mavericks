@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipe - Mavericks</title>
+  <style>
+   * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 0.5rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            background-color: rgba(255,255,255,0.1);
+            color: #fbbf24;
+        }
+
+        .special-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .special-btn {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: #1e3a8a;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .special-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 4rem 2rem;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #1e3a8a;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .team-member:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #fbbf24;
+        }
+
+        .member-photo {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #e5e7eb, #d1d5db);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-photo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            opacity: 0.1;
+        }
+
+        .member-photo::after {
+            content: '👤';
+            font-size: 4rem;
+            color: #9ca3af;
+            z-index: 1;
+        }
+
+        .member-info {
+            padding: 1.5rem;
+        }
+
+        .member-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: #fbbf24;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .member-bio {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .member-contact {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-btn {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: #1e3a8a;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Company Info */
+        .company-info {
+            background: #f8f9fa;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .company-info h2 {
+            font-size: 2rem;
+            color: #1e3a8a;
+            margin-bottom: 2rem;
+        }
+
+        .company-info p {
+            font-size: 1.1rem;
+            color: #6b7280;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3a8a;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #fbbf24;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: #1e3a8a;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .special-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .special-btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .member-contact {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+            .equipe {
+        padding-bottom: 3rem; /* Espaço visual antes do rodapé */
+        }
+
+        .footer {
+        padding-top: 3rem; /* Espaço visual acima do rodapé */
+        background-color: #1a3d8b;
+        color: white;
+        }
+
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .member-photo {
+        width: 150px;        /* Ajuste o tamanho conforme necessário */
+        height: 150px;
+        background-image: url('caminho/para/foto-carlos.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;  /* Se quiser foto circular */
+}
+
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav-container">
+      <div class="logo">Mavericks</div>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="equipe.html" class="active">Equipe</a></li>
+        <li><a href="depoimentos.html">Depoimentos</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+      <div class="special-buttons">
+        <a href="relatorios.html" class="special-btn">📊 Relatórios</a>
+        <a href="equipe.html" class="special-btn">👥 Equipe Completa</a>
+      </div>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Page Header -->
+    <section class="page-header">
+      <div class="container">
+        <h1 class="fade-in">Nossa Equipe</h1>
+        <p class="fade-in">Conheça os profissionais que tornam nossos resultados possíveis</p>
+      </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+      <div class="container">
+        <h2 class="section-title">Quem Somos</h2>
+        <div class="team-grid">
+          <!-- Diego -->
+          <div style="max-width: 300px; border: 2px solid #f4b500; border-radius: 12px; padding: 20px; font-family: Arial, sans-serif; background: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+        <div style="width: 120px; height: 120px; margin: 0 auto 15px; overflow: hidden; border-radius: 50%;">
+            <img src="corretor0.jpg" alt="Carlos Augusto" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <h3 style="color: #003366; text-align: center; margin-bottom: 8px;">Diego Pereira</h3>
+        <p style="color: #f4b500; font-weight: 600; font-size: 14px; text-align: center; margin-bottom: 15px;">
+           Especialista em vendas de lotes com mais de 2 milhões em vendas
+        </p>
+        <p style="color: #4a4a4a; font-size: 14px; line-height: 1.5; margin-bottom: 20px; text-align: justify;">
+           Diego possui vasta experiência em negociações comerciais e industriais. Sua expertise em análise de investimentos e conhecimento do mercado corporativo fazem dele referência em vendas de loteamentos.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 12px;">
+            <a href="#" style="background-color: #f4b500; color: #003366; padding: 8px 14px; border-radius: 25px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 18px;">📸</span> Instagram
+            </a>
+            <a href="#" style="background-color: #f4b500; color: #003366; padding: 8px 14px; border-radius: 25px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 18px;">📱</span> WhatsApp
+            </a>
+        </div>
+        </div>
+
+          <!-- Carlos -->
+          <div style="max-width: 300px; border: 2px solid #f4b500; border-radius: 12px; padding: 20px; font-family: Arial, sans-serif; background: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+        <div style="width: 120px; height: 120px; margin: 0 auto 15px; overflow: hidden; border-radius: 50%;">
+            <img src="corretor0.jpg" alt="Carlos Augusto" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <h3 style="color: #003366; text-align: center; margin-bottom: 8px;">Carlos Augusto</h3>
+        <p style="color: #f4b500; font-weight: 600; font-size: 14px; text-align: center; margin-bottom: 15px;">
+            Coordenador da equipe de vendas - CRECI 245624-F
+        </p>
+        <p style="color: #4a4a4a; font-size: 14px; line-height: 1.5; margin-bottom: 20px; text-align: justify;">
+            Carlos coordena nossa equipe de vendas e é responsável pelo treinamento e desenvolvimento dos corretores. Sua liderança e visão estratégica são fundamentais para o sucesso da equipe.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 12px;">
+            <a href="#" style="background-color: #f4b500; color: #003366; padding: 8px 14px; border-radius: 25px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 18px;">📸</span> Instagram
+            </a>
+            <a href="#" style="background-color: #f4b500; color: #003366; padding: 8px 14px; border-radius: 25px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 18px;">📱</span> WhatsApp
+            </a>
+        </div>
+        </div>
+
+
+          <!-- Laís Barbaresco -->
+           <div style="max-width: 300px; border: 2px solid #f4b500; border-radius: 12px; padding: 20px; font-family: Arial, sans-serif; background: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.1);">
+        <div style="width: 120px; height: 120px; margin: 0 auto 15px; overflow: hidden; border-radius: 50%;">
+            <img src="corretor1.jpg" alt="Laís Barbaresco" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        <h3 style="color: #003366; text-align: center; margin-bottom: 8px;">Laís Barbaresco</h3>
+        <p style="color: #f4b500; font-weight: 600; font-size: 14px; text-align: center; margin-bottom: 15px;">
+            Especialista em vendas de lotes com mais de 2 milhões em vendas
+        </p>
+        <p style="color: #4a4a4a; font-size: 14px; line-height: 1.5; margin-bottom: 20px; text-align: justify;">
+            Laís possui vasta experiência em negociações comerciais e industriais. Sua expertise em análise de investimentos e conhecimento do mercado corporativo fazem dela referência em vendas de loteamentos.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 12px;">
+            <a href="#" style="background-color: #f4b500; color: #003366; padding: 8px 14px; border-radius: 25px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 18px;">📸</span> Instagram
+            </a>
+            <a href="#" style="background-color: #f4b500; color: #003366; padding: 8px 14px; border-radius: 25px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 18px;">📱</span> WhatsApp
+            </a>
+        </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Company Info -->
+    <section class="company-info">
+      <div class="container">
+        <h2>Sobre a Equipe Mavericks</h2>
+        <p>
+          Fundada para transformar a experiência de compra no mercado imobiliário de resorts, a equipe Mavericks do Santa Barbara Resort Residence une tradição, inovação e atendimento de excelência. Especializados na venda de lotes e casas exclusivas, trabalhamos para oferecer oportunidades únicas que realizem o sonho de nossos clientes em morar ou investir em um lugar diferenciado.
+
+O Santa Barbara Resort Residence se destaca pela sua infraestrutura completa e planejada, que proporciona conforto e praticidade no dia a dia. Com segurança 24 horas e sistema de monitoramento avançado, garantimos tranquilidade para você e sua família.
+
+Além disso, o resort oferece uma área de lazer completa, com espaços para convivência, esporte, piscina, áreas verdes preservadas e contato direto com a natureza, promovendo qualidade de vida e bem-estar. Nosso compromisso também está na valorização contínua do empreendimento, fazendo do Santa Barbara Resort Residence um investimento seguro e promissor.
+
+Na equipe Mavericks, acreditamos que cada cliente merece um atendimento personalizado, por isso investimos em tecnologia e capacitação constante para entregar um serviço de alta qualidade, alinhado às suas necessidades e expectativas.
+
+Venha conhecer o Santa Barbara Resort Residence e descubra como podemos ajudar você a viver com exclusividade, conforto e segurança em um dos empreendimentos mais completos da região.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="index.html">Início</a>
+        <a href="equipe.html">Equipe</a>
+        <a href="depoimentos.html">Depoimentos</a>
+        <a href="contato.html">Contato</a>
+      </div>
+      <p>© 2025 Corretores Mavericks. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    menuToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+      });
+    });
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
